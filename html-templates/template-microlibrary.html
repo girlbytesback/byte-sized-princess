@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Microlibrary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <style>
+      /* click a number and scroll smoothly to its text */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      /* the basic colors and font, with room for the number bar on the left. */
+      body {
+        font-family: monospace;
+        min-height: 100%;
+        margin: 0 auto;
+        padding-left: 31px;
+        background: #878fec;;
+        font-size: 18px;
+        color: white;
+      }
+      
+      /* give the big heading a brown outline and a little shadow. */
+      h1 {
+        font-weight: normal;
+        text-align: center;
+        padding: 20px;
+        margin: 0;
+        -webkit-text-stroke: 1px white;
+        font-size: 90px;
+        line-height: 0.85;
+        letter-spacing: -0.1em;
+        border-bottom: 1px solid white;
+        color: #878fec;;
+        text-shadow: 0 0 10px rgba(255,255,255, 0.194);
+
+      }
+
+      h3 {
+        font-size: inherit;
+        font-weight: normal;
+        text-align: center;
+        margin: 0;
+        font-style: italic;
+      }
+
+      /* keep the bar on the left while the page scrolls */
+      nav {
+        background: #878fec;;
+        z-index: 20;
+        padding: 0;
+        border-right: 1px solid currentColor;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 31px;
+        height: 100dvh;
+        overflow-y: auto;
+      }
+
+      nav a {
+        flex-shrink: 0;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* back to the top, from the bottom of the bar */
+      nav .back-to-top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        aspect-ratio: 1;
+        border-top: 1px solid currentColor;
+      }
+
+      /* stack the numbers with a little breathing room */
+      .nav-numbers {
+        padding: 5px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* keep the heading at the top while its text scrolls past */
+      summary {
+        list-style: none;
+        cursor: pointer;
+        line-height: 1.1;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        background: #878fec;;
+        z-index: 1;
+        padding: 10px;
+      }
+
+      details[open] > summary {
+        border-bottom: 1px solid currentColor;
+      }
+
+      /* hide the default arrow so we can use our own */
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      /* the same little arrow for opening texts and going back up */
+      summary::before,
+      nav .back-to-top::before {
+        content: '▶';
+        display: inline-block;
+        margin-top: -3px;
+        width: 24px;
+        height: 24px;
+        font-family: sans-serif;
+        font-size: 18px;
+        line-height: 24px;
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      summary::before {
+        margin-right: 0.3em;
+      }
+
+      nav .back-to-top::before {
+        transform: rotate(-90deg);
+      }
+
+      /* point the arrow down when the text is open */
+      details[open] > summary::before {
+        transform: rotate(90deg);
+      }
+
+      details {
+        font-family: serif;
+        font-size: 20px;
+        line-height: 1.2;
+      }
+
+      /* little round numbers in the navigation */
+      .number {
+        vertical-align: middle;
+        text-align: center;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+        border: 1px solid currentColor;
+        border-radius: 100%;
+        padding-top: 1px;
+      }
+
+      p {
+        margin: 0 0 10px;
+      }
+
+      /* give each name a border */
+      .author {
+        display: block;
+        font-family: monospace;
+        letter-spacing: -0.03em;
+        font-size: 14px;
+        border: 1px solid currentColor;
+        padding: 2px 10px;
+        margin: auto;
+        margin-top: 5px;
+        width: fit-content;
+        border-radius: 20px;
+      }
+
+      article {
+        padding: 10px;
+      }
+
+      section {
+        border-bottom: 1px solid currentColor;
+      }
+
+
+    </style>
+  </head>
+
+  <body>
+    <!-- the top link brings us back to this heading -->
+    <header id="top">
+      <h1><span class="title-text">cloud micro library</span></h1>
+    </header>
+
+    <!-- each number links to a section using its id -->
+    <nav>
+      <div class="nav-numbers">
+        <a class="number" href="#s1" aria-label="1. Trans*Feminist Counter Cloud Action">1</a>
+        <a class="number" href="#s2" aria-label="2. Race after technology (2023), pp. 2–3">2</a>
+        <a class="number" href="#s3" aria-label="3. Data infrastructure studies on an unequal planet (2023), p. 9">3</a>
+        <a class="number" href="#s4" aria-label="4. Technologies of Imagination (2018)">4</a>
+        <a class="number" href="#s5" aria-label="5. Friction (Intro, 2026)">5</a>
+        <a class="number" href="#s6" aria-label="6. Toward a Minor Tech (2023), APRJA">6</a>
+      </div>
+      <a class="back-to-top" href="#top" aria-label="Back to top"></a>
+    </nav>
+
+    <!-- each text lives in a details element; its summary is the clickable title -->
+    <div id="library">
+        <section id="s1">
+        <details>
+          <summary>
+            What's up with the Cloud?
+            <span class="author">TITiPI</span>
+          </summary>
+          <article>
+            
+          “The Cloud” is a marketing term that has become a commonplace way to refer to centrally managed computational infrastructure to which customers can subscribe. The Cloud is used to deliver services across a continuously growing number of industries, from financial markets and health institutions to game industries, mining, government and agriculture. Smartphones are essential accessories for computational infrastructures, because they provide uniquely addressable nodes for delivery on the one hand, and demand for continuous streams of data on the other.
+
+          The Cloud is made up of storage, networking and compute, which generates and hosts billions of services and devices, operating in diverse geopolitical and financial contexts. Massive amounts of computers are brought together, to then offer smaller and larger bits of computation-as-a-service through a specific financial model of "pay-for-what-you-consume". This financial model differs from the up-front server infrastructure and software licensing costs that you would typically pay on-premises in your data center: there is no more ownership, autonomy or product, just services. The move to software, infrastructure and networking-as-a-service has a dramatic effect on the spreadsheets of organisations and businesses as they shift their budget allocations for all computing and data services from the column "capital expenses" to "operational expenses". At first sight, this means they are able to reduce their fixed costs, and increase cash flow within their organisation. But eventually, it paves the way for them to sign up to decade long subscriptions which put them in debt, and spend potentially exponential amounts on computing. Now all expertise has been outsourced and their dependency on cloud services (including their extractive logics) has become permanent. 
+                        </p>
+          </article>
+        </details>
+      </section>
+      
+      <section id="s2">
+        <details>
+          <summary>
+            Race after technology (2023), pp. 2–3<br />
+            <span class="author">Ruha Benjamin</span>
+          </summary>
+          <article>
+            <p>
+              [...] In a classic study of how names impact people’s experience
+              on the job market, researchers show that, all other things being
+              equal, job seekers with Whitesounding first names received 50
+              percent more callbacks from employers than job seekers with
+              Black-sounding names. They calculated that the racial gap was
+              equivalent to eight years of relevant work experience, which White
+              applicants did not actually have; and the gap persisted across
+              occupations, industry, employer size — even when employers
+              included the “equal opportunity” clause in their ads.° With
+              emerging technologies we might assume that racial bias will be
+              more scientifically rooted out. Yet, rather than challenging or
+              overcoming the cycles of inequity, technical fixes too often
+              reinforce and even deepen the status quo. For example, a study by
+              a team of computer scientists at Princeton examined whether a
+              popular algorithm, trained on human writing online, would exhibit
+              the same biased tendencies that psychologists have documented
+              among humans. They found that the algorithm associated
+              White-sounding names with “pleasant” words and Black-sounding
+              names with “unpleasant” ones.
+            </p>
+
+            <p>
+              Such findings demonstrate what I call “the New Jim Code”: the
+              employment of new technologies that reflect and reproduce existing
+              inequities but that are promoted and perceived as more objective
+              or progressive than the 5 Race after Technology discriminatory
+              systems of a previous era.* Like other kinds of codes that we
+              think of as neutral, “normal” names have power by virtue of their
+              perceived neutrality. [...]
+            </p>
+          </article>
+        </details>
+      </section>
+
+    <section id="s3">
+        <details>
+          <summary>
+            Data infrastructure studies on an unequal planet (2023), p. 9<br />
+            <span class="author">Patrick Brodie</span>
+          </summary>
+          <article>
+            <p>
+            [...] Extraction itself has never been a geographically discrete activity—it has always relied on
+networked, multi scalar, and often conflicting technoscientific discourses and geographical
+relations in some way. Crawford (2021) warns that The field of AI is explicitly attempting to
+capture the planet in a computationally legible form. This is not a metaphor so much as the
+industry’s direct ambition. The AI industry is making and normalizing its own proprietary maps, as
+a cen tralized God’s-eye view of human movement, communica tion, and labor. And this is not
+only related to the more “infrastructural” approach, as she unravels in detail. These are industries
+that desire to be “the dominant way of seeing. This colonizing impulse centralizes power in the AI
+field: it determines how the world is measured and defined while simultan eously denying that
+this is an inherently political activity” (Crawford, 2021). [...]
+            </p>
+          </article>
+        </details>
+      </section>
+
+
+      <section id="s4">
+        <details>
+          <summary>
+            Technologies of Imagination (2018)
+            <span class="author">Asta Vonderau</span>
+          </summary>
+          <article>
+            
+             <p>
+              [...] Furthermore, how do these popular images of the cloud relate to the actual technological
+            operation of data storage and processing? Cloud computing is a currently dominating
+            computation and data-processing model on which most social networks and online services are
+            based. Data centres represent the core of cloud infrastructure and one of the fastest-growing
+            industries worldwide. Their energy consumption represents over three percent of global
+            electricity usage and is growing at a rate of fourteen percent annually. This energy-consuming
+            heavy industry, however, is still not in the public eye. Media reports and IT companies represent
+            the cloud, and the Internet more generally, as being natural, immaterial, and fluid—think of the
+            language regularly used for describing such technologies and the metaphors of the “cloud,” “data
+            streams,” or “IT ecologies” (see Blum; Hogan). Such images are supported and instrumentalized
+            by IT companies in marketing campaigns that often present the cloud and data centres as
+            sustainable by contrasting them with “older” and ”dirtier” industries. Dematerialized perceptions
+            of the cloud are grounded in a specific relation between the cloud as a (virtual) network of data
+            processing and data centres as the cloud’s single infrastructural site. While data centres are
+            located in concrete geographic places within national territories, their technological operations
+            can range far beyond those territories and legislative boundaries. The cloud and its data centres
+            thus entertain a relationship of “intimacy at a distance” by forming part of each other while being
+            differently situated in spatial terms at the same time (see Rossiter). The cloud’s materialities, its
+            social effects, and the environmental impact of the data centre industry are unevenly distributed
+            across spatial dimensions. This arrangement supports dematerialized perceptions of the cloud.
+            Users of cloud services, for instance, located far away from the actual storages of their data, may
+            remain unaware of the cloud’s material existence and its resource needs. [...]
+             </p>
+            </p>
+          </article>
+        </details>
+      </section>
+
+      <section id="s6">
+        <details>
+          <summary>
+            Toward a Minor Tech (2023)
+            <span class="author">Christian Ulrik Andersen & Geoff Cox</span>
+          </summary>
+          <article>
+            <p>
+              [...] what we are calling "minor tech" making reference to
+              Gilles Deleuze and Félix Guattari's essay "Kafka: Toward a Minor Literature" (written
+              in 1975). They propose the concept of minor literature as opposed to great or
+              established literature — the use of a major language that subverts it from within.
+              "Becoming-minitorian" in this sense — to use a related concept from A Thousand
+              Plateaus — involves the recognition of particular instances of power and the ability
+              of the repressed minority to gain some degree of autonomy of expression.
+              "Expression must break forms, encourage ruptures and new sproutings", as Deleuze
+              and Guattari put it (28).
+              A characteristic of minor technologies is that everything in them is
+              politics.
+              For our purpose, this notion of the minor is a relative position to major (or big) tech.
+              This also partly invokes the issue of scale, the theme of the 2023 edition of
+              transmediale festival. In the call, the organizers state that the festival is an
+              exploration of “how technological scale sets conditions for relations, feelings,
+              democratic processes, and infrastructures.” . The
+              importance of scale becomes apparent in the massification of images and texts on
+              the internet, and the application of various scalar machine techniques that try to
+              make things comprehensible for human and non-human readers alike; big computing
+              begets big data. However, “we have a problem with scale”, as Anna Lowenhaupt
+              Tsing puts it (37), in its connection to modernist master narratives that organise life
+              on an increasingly globalised scale (the 'bigness' of capitalism). Alternatively, she
+              writes, we need to “notice” the small details and not assume that these need to be
+              scaled up to be effective, as is the orthodoxy of research. In technical fields, not
+              least machine learning, this problem with scale has severe consequences, with
+              ensuing discrimination and environmental damage.
+              A minor technology is that which a minority constructs within the
+              grammar of technology.
+              Small tech on the other hand operates at human scale (more peer to peer than
+              server-client) and “stutters and stammers the major” (to use the words of Deleuze
+              and Guattari once more). More pragmatically, as artist-researcher Marloes de Valk
+              puts it in the Damaged Earth Catalog: “Small technology, smallnet and smolnet are
+              associated with communities using alternative network infrastructures, delinking from
+              the commercial Internet.” [...]
+            </p>
+          </article>
+        </details>
+      </section>
+    </div>
+    <script>
+      // open the linked text when someone clicks a number
+      document.querySelectorAll('.nav-numbers a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          // drop the # from the link to find the matching section
+          var section = document.getElementById(link.hash.slice(1));
+          var details = section && section.querySelector('details');
+          // only open it if there's actually a text to show
+          if (details) {
+            details.open = true;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
