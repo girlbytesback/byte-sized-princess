@@ -2,3 +2,5 @@
 .vscode
 .vscode/*
 .DS_Store
+vault.json
+vault-blob.h
